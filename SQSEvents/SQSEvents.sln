@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQSEvents", "SQSEvents\SQSEvents.csproj", "{33BD5375-EE03-4981-8010-9C6A199FD0EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQSProducer", "SQSProducer\SQSProducer.csproj", "{7DBBAA19-CBC3-4976-BDE7-CB4AF8C3C6D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQSConsumer", "SQSConsumer\SQSConsumer.csproj", "{3C9E4A2A-22D9-46E5-B160-485733E07E17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33BD5375-EE03-4981-8010-9C6A199FD0EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33BD5375-EE03-4981-8010-9C6A199FD0EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33BD5375-EE03-4981-8010-9C6A199FD0EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33BD5375-EE03-4981-8010-9C6A199FD0EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DBBAA19-CBC3-4976-BDE7-CB4AF8C3C6D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DBBAA19-CBC3-4976-BDE7-CB4AF8C3C6D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DBBAA19-CBC3-4976-BDE7-CB4AF8C3C6D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DBBAA19-CBC3-4976-BDE7-CB4AF8C3C6D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9E4A2A-22D9-46E5-B160-485733E07E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9E4A2A-22D9-46E5-B160-485733E07E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9E4A2A-22D9-46E5-B160-485733E07E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9E4A2A-22D9-46E5-B160-485733E07E17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D77683C8-F468-455C-8BC6-E96D27198242}
+	EndGlobalSection
+EndGlobal
