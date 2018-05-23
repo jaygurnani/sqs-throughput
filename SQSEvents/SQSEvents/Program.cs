@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SQSConsumer;
-using SQSEvents.Models;
 using SQSProducer;
 
 namespace SQSEvents
@@ -11,6 +11,7 @@ namespace SQSEvents
     {
         static string accessKey = "AKIAIZEJJ7VBN2RMIYXQ";
         static string secretKey = "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";
+        private static int producerCounter;
 
         static void Main(string[] args)
         {
@@ -20,13 +21,15 @@ namespace SQSEvents
             Console.WriteLine("Enter number of consumer threads");
             var consumerThreadsString = Console.ReadLine();
 
-            // Setup the Producers
-            SetupProducers(Int32.Parse(producerThreadsString));
-            
             // Setup the Consumers
             SetupConsumers(Int32.Parse(consumerThreadsString));
 
-            Console.WriteLine("Press any key to continue...");
+            // Setup the Producers
+            SetupProducers(Int32.Parse(producerThreadsString));
+
+            // Print out some stats
+            ReadStats();
+
             Console.ReadKey();
         }
 
@@ -37,14 +40,7 @@ namespace SQSEvents
                 Task.Factory.StartNew(() =>
                 {
                     var sqsProducer = new SQSProducer.SQSProducer(accessKey, secretKey, "https://sqs.eu-west-1.amazonaws.com/093471706084/sqs-events.fifo");
-                    var messageData = new SampleData
-                    {
-                        MessageId = Guid.NewGuid(),
-                        MessageBody = DateTime.Now.ToLongDateString()
-                    };
-
-                    var messageString = JsonConvert.SerializeObject(messageData);
-                    sqsProducer.SendMessage(messageString);
+                    sqsProducer.SendMessage();
                 });
             }
         }
@@ -59,6 +55,27 @@ namespace SQSEvents
                     sqsConsumer.ReceieveMessage();
                 });
             }
+        }
+
+        static void ReadStats()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                int currentSeconds = 1;
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Total Messages Produced {Stats.Stats.ProducerCounter}");
+                    Console.WriteLine($"Producer Throughput (msg/second): {Stats.Stats.ProducerCounter / currentSeconds}");
+                    Console.WriteLine();
+                    Console.WriteLine($"Total Messages Consumed {Stats.Stats.ConsumerCounter}");
+                    Console.WriteLine($"Consumer Throughput (msg/second): {Stats.Stats.ConsumerCounter / currentSeconds}");
+                    Console.WriteLine();
+                    Console.WriteLine($"Total Time: {currentSeconds}");
+                    currentSeconds++;
+                    Thread.Sleep(1000);
+                }
+            }); 
         }
     }
 }

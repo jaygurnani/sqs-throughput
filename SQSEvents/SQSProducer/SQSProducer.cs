@@ -4,7 +4,10 @@ using Amazon;
 using Amazon.Runtime;
 using Amazon.SQS;
 using Amazon.SQS.Model;
+using Newtonsoft.Json;
 using NLog;
+using SQSProducer.Models;
+using Stats;
 
 namespace SQSProducer
 {
@@ -23,20 +26,37 @@ namespace SQSProducer
             _logger = LogManager.GetCurrentClassLogger();
         }
 
-        public void SendMessage(string messageBody)
+        public void SendMessage()
         {
-            var sendRequest = new SendMessageRequest
+            while (true)
             {
-                QueueUrl = _queueUrl,
-                MessageBody = messageBody,
-                MessageGroupId = MessageGroupId,
-                MessageDeduplicationId = Guid.NewGuid().ToString()
-            };
-            var result = _client.SendMessageAsync(sendRequest).Result;
-            if (result.HttpStatusCode != HttpStatusCode.Accepted)
-            {
-                _logger.Error("Error in sending SQS Request");
+                var messageData = new SampleData
+                {
+                    MessageId = Guid.NewGuid(),
+                    MessageBody = DateTime.Now.Millisecond.ToString()
+                };
+
+                var messageString = JsonConvert.SerializeObject(messageData);
+
+                var sendRequest = new SendMessageRequest
+                {
+                    QueueUrl = _queueUrl,
+                    MessageBody = messageString,
+                    MessageGroupId = MessageGroupId,
+                    MessageDeduplicationId = Guid.NewGuid().ToString()
+                };
+                var result = _client.SendMessageAsync(sendRequest).Result;
+
+                if (result.HttpStatusCode != HttpStatusCode.OK)
+                {
+                    _logger.Error("Error in sending SQS Request");
+                }
+                else
+                {
+                    Stats.Stats.ProducerCounter++;
+                }
             }
+           
         }
     }
 }

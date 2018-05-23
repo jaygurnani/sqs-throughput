@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using Amazon;
 using Amazon.Runtime;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 using NLog;
+using Stats;
 
 namespace SQSConsumer
 {
@@ -43,6 +45,14 @@ namespace SQSConsumer
                             ReceiptHandle = message.ReceiptHandle
                         };
                         var result = _client.DeleteMessageAsync(deleteMessageRequest).Result;
+                        if (result.HttpStatusCode != HttpStatusCode.OK)
+                        {
+                            _logger.Error("Error in receving SQS Request");
+                        }
+                        else
+                        {
+                            Stats.Stats.ConsumerCounter++;
+                        }
                     }
                 }
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SQSEvents.Models
+namespace SQSProducer.Models
 {
     public class SampleData
     {
