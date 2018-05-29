@@ -39,7 +39,7 @@ namespace SQSEvents
             {
                 Task.Factory.StartNew(() =>
                 {
-                    var sqsProducer = new SQSProducer.SQSProducer(accessKey, secretKey, "https://sqs.eu-west-1.amazonaws.com/093471706084/sqs-events.fifo");
+                    var sqsProducer = new SQSProducer.SQSProducer(accessKey, secretKey, "");
                     sqsProducer.SendMessage();
                 });
             }
@@ -51,7 +51,7 @@ namespace SQSEvents
             {
                 Task.Factory.StartNew(() =>
                 {
-                    var sqsConsumer = new SQSConsumer.SQSConsumer(accessKey, secretKey, "https://sqs.eu-west-1.amazonaws.com/093471706084/sqs-events.fifo");
+                    var sqsConsumer = new SQSConsumer.SQSConsumer(accessKey, secretKey, "");
                     sqsConsumer.ReceieveMessage();
                 });
             }
