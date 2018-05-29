@@ -9,8 +9,8 @@ namespace SQSEvents
 {
     class Program
     {
-        static string accessKey = "AKIAIZEJJ7VBN2RMIYXQ";
-        static string secretKey = "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";
+        static string accessKey = "";
+        static string secretKey = "";
         private static int producerCounter;
 
         static void Main(string[] args)
